@@ -102,6 +102,17 @@ For a one-click Windows launch, run `run.bat` from the project root. It starts t
 
 The frontend uses `http://127.0.0.1:8000` by default. Set `VITE_API_BASE_URL` before starting Vite to use another local API URL.
 
+## Deploy the frontend to Vercel
+
+The current executor is intended for local learning and is not a hardened public sandbox. Deploy only the static frontend until a secured execution API is available.
+
+1. Import `https://github.com/AkshithK27/pythonvisualizernithin` as a new Vercel project.
+2. Set **Root Directory** to `python-code-visualizer/frontend`.
+3. Select **Vite** as the framework preset, use `npm run build` as the build command, and `dist` as the output directory.
+4. Leave `VITE_API_BASE_URL` unset for a frontend-only deployment, then deploy.
+
+The deployed page will explain that analysis, execution, and comparison need a separately secured API. Do not point `VITE_API_BASE_URL` at a developer's `localhost` or expose the current execution backend publicly. Local development continues to use `http://127.0.0.1:8000` automatically.
+
 ## Running tests
 
 ```bat

@@ -1,7 +1,7 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { gateQuestions, gateSubjects, resourceCatalog } from './learningData';
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000';
+const API_BASE = import.meta.env.VITE_API_BASE_URL || (import.meta.env.DEV ? 'http://127.0.0.1:8000' : '');
 const CodeEditor = lazy(() => import('./CodeEditor'));
 
 const examples = {
@@ -203,6 +203,11 @@ function App() {
     clearTimeout(analysisTimerRef.current);
     setQuizAnswer(null);
     setAnalysis(null);
+    if (!API_BASE) {
+      setAnalysisError('Execution API is not configured for this deployment.');
+      setIsAnalyzing(false);
+      return undefined;
+    }
     if (!code.trim()) {
       setAnalysis(null);
       setAnalysisError('Enter Python code to analyze concepts and build its diagram.');
@@ -289,6 +294,11 @@ function App() {
   };
 
   const handleRun = async () => {
+    if (!API_BASE) {
+      setStatus('Execution API is not configured for this deployment.');
+      setTraceResult({ ...initialTrace, error: 'Connect a secured API service to enable code execution.' });
+      return;
+    }
     if (!code.trim()) {
       setStatus('Enter Python code before running.');
       setTraceResult({ ...initialTrace, error: 'Code cannot be empty.' });
@@ -355,6 +365,10 @@ function App() {
   };
 
   const handleCompare = async () => {
+    if (!API_BASE) {
+      setComparison('Connect a secured API service to enable program comparison.');
+      return;
+    }
     try {
       const response = await fetch(`${API_BASE}/compare`, {
         method: 'POST',
@@ -446,6 +460,12 @@ function App() {
           </button>
         </div>
       </header>
+
+      {!API_BASE && (
+        <div className="policy-warning deployment-warning">
+          Frontend-only deployment: code analysis, execution, and comparison need a separately secured API. No code is sent to a visitor's computer.
+        </div>
+      )}
 
       <main className="layout">
         <section className="editor-panel panel">
