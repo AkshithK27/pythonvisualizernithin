@@ -59,24 +59,26 @@ python-code-visualizer/
 
 ### Prerequisites
 
-- Git
+- Git (not needed when downloading the ZIP)
 - Python 3.11 or newer
 - Node.js 20.19+ or 22.12+ (required by Vite 8)
 - VS Code
 
 ### Get the project
 
-In a VS Code terminal, clone the repository and enter its folder:
+Clone the repository and enter the actual project folder:
 
 ```powershell
 git clone https://github.com/AkshithK27/pythonvisualizernithin.git
-Set-Location pythonvisualizernithin
+Set-Location pythonvisualizernithin\python-code-visualizer
 ```
 
-If you already opened the project folder in VS Code, skip the clone commands. Run the following from the project root to create the Python environment and install backend dependencies:
+To use the ZIP instead, download and extract the repository ZIP from GitHub, then open its `python-code-visualizer` subfolder in VS Code. If the outer extracted folder is already open in a terminal, enter the project with `Set-Location .\python-code-visualizer`.
+
+If you already opened the `python-code-visualizer` project folder in VS Code, skip the clone/extract steps. Run the following from that project root to create the Python environment and install backend dependencies:
 
 ```powershell
-py -3.11 -m venv .venv
+py -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r backend\requirements.txt
 ```
 
@@ -98,7 +100,7 @@ npm run dev
 
 Open http://127.0.0.1:5173 in your browser. Keep both terminals open while using the visualizer. The backend health check is http://127.0.0.1:8000/health.
 
-For a one-click Windows launch, run `run.bat` from the project root. It starts the API and frontend in separate terminals.
+For a one-click Windows launch, run `run.bat` from the project root (double-click it in File Explorer or run `.\run.bat` in PowerShell). It creates `.venv` if needed, installs dependencies, and starts the API and frontend in separate terminals. Keep both terminals open. The first launch needs an internet connection to install packages.
 
 The frontend uses `http://127.0.0.1:8000` by default. Set `VITE_API_BASE_URL` before starting Vite to use another local API URL.
 
